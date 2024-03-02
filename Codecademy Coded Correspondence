@@ -1,0 +1,171 @@
+vishals_message = "xuo jxuhu! jxyi yi qd unqcfbu ev q squiqh syfxuh. muhu oek qrbu je tusetu yj? y xefu ie! iudt cu q cuiiqwu rqsa myjx jxu iqcu evviuj!"
+
+alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+letter_to_index = dict(zip(alphabet, range(len(alphabet))))
+#print(letter_to_index); 
+index_to_letter = dict(zip(range(len(alphabet)), alphabet))
+#1
+decrypted_message1 = []
+for c in vishals_message:
+  key = 10
+  if c in alphabet: 
+    position = alphabet.index(c)
+    new_position = (position + key) % 26
+    new_character = alphabet[new_position]
+    decrypted_message1.append(new_character)
+    #print(decrypted_message1)
+  else:
+    decrypted_message1 += c
+
+decrypted_message1 = ''.join(decrypted_message1)
+#print(decrypted_message1)
+#2
+encoded_message1 = "hi Vishal! i am excited to use a cypher with you."
+encrypted_message1 = []
+for c in encoded_message1:
+  key = 10
+  if c in alphabet: 
+    position = alphabet.index(c)
+    new_position = (position - key) % 26
+    new_character = alphabet[new_position]
+    encrypted_message1.append(new_character)
+  else:
+    encrypted_message1 += c
+
+encrypted_message1 = ''.join(encrypted_message1)
+#print(encrypted_message1)
+
+#3
+vishal1 = "jxu evviuj veh jxu iusedt cuiiqwu yi vekhjuud."
+decrypt_vishal1 = []
+for c in vishal1:
+  key = 10
+  if c in alphabet: 
+    position = alphabet.index(c)
+    new_position = (position + key) % 26
+    new_character = alphabet[new_position]
+    decrypt_vishal1.append(new_character)
+  else:
+    decrypt_vishal1 += c
+
+decrypt_vishal1 = ''.join(decrypt_vishal1)
+#print(decrypt_vishal1)
+#3part2
+vishal2 = "bqdradyuzs ygxfubxq omqemd oubtqde fa oapq kagd yqeemsqe ue qhqz yadq eqogdq!."
+decrypt_vishal2 = []
+for c in vishal2:
+  key = 14
+  if c in alphabet: 
+    position = alphabet.index(c)
+    new_position = (position + key) % 26
+    new_character = alphabet[new_position]
+    decrypt_vishal2.append(new_character)
+  else:
+    decrypt_vishal2 += c
+
+decrypt_vishal2 = ''.join(decrypt_vishal2)
+#print(decrypt_vishal2)
+#decode function
+def caesar_decode(message, offset):
+  decoded_message = []
+  for c in message:
+    if c in alphabet: 
+      position = alphabet.index(c)
+      new_position = (position + offset) % 26
+      new_character = alphabet[new_position]
+      decoded_message.append(new_character)
+    else:
+     decoded_message += c
+  decoded_message = ''.join(decoded_message)
+  return(decoded_message)
+#test
+#print(caesar_decode(message = "bqdradyuzs ygxfubxq omqemd oubtqde fa oapq kagd yqeemsqe ue ghqz yadq eqogdq!", offset = 14))
+#encode function
+def caesar_encode(message, offset):
+  encoded_message = []
+  for c in message:
+    if c in alphabet: 
+      position = alphabet.index(c)
+      new_position = (position + offset) % 26
+      new_character = alphabet[new_position]
+      encoded_message.append(new_character)
+    else:
+     encoded_message += c
+  encoded_message = ''.join(encoded_message)
+  return(encoded_message)
+
+#test
+#print(caesar_encode("hi vishal! i am excited to use a cypher with you", -10))
+
+def multiple_offsets(message):
+  decoded_message = []
+  for int in range(26):
+    for c in message:
+     if c in alphabet: 
+      position = alphabet.index(c)
+      new_position = (position + int) % 26
+      new_character = alphabet[new_position]
+      decoded_message.append(new_character)
+     else:
+       decoded_message += c
+
+  decoded_message = ''.join(decoded_message)
+  return(decoded_message, int)
+
+#print(multiple_offsets("vhfinmxkl atox kxgwxkxw tee hy maxlx hew vbiaxkl hulhexmx. px'ee atox mh kxteer lmxi ni hnk ztfx by px ptgm mh dxxi hnk fxlltzxl ltyx."))
+
+#5
+def decrypt_vigenere(cipher, key):
+  decrypted_vigenere = []
+  codedMessage = []
+  keyIndex = 0; #use for key index
+  for cipherLetter in cipher:
+    if(not(cipherLetter in alphabet)):
+      codedMessage += cipherLetter
+    else:
+      codedMessage += key[keyIndex]
+      if(keyIndex >= (len(key) - 1)): 
+        keyIndex = 0
+      else: 
+        keyIndex += 1
+
+  cipherIndex = 0
+  for letter in codedMessage:
+    if(letter in alphabet):
+      shift = (alphabet.index(letter) + alphabet.index(cipher[cipherIndex])) % len(alphabet) 
+      decrypted_vigenere += alphabet[shift]
+    else:
+      decrypted_vigenere += letter
+    cipherIndex += 1    
+  return "".join(decrypted_vigenere)
+#write decrypted message text  
+
+print(decrypt_vigenere("txm srom vkda gl lzlgzr qpdb? fepb ejac! ubr imn tapludwy mhfbz cza ruxzal wg zztylktoikqq!", "friends"))
+
+#6
+def encrypt_vigenere (message, key):
+  encrypted_vigenere = []
+  codedMessage = []
+  keyIndex = 0; #use for key index
+  for Letter in message:
+    if(not(Letter in alphabet)):
+      codedMessage += Letter
+    else:
+      codedMessage += key[keyIndex]
+      if(keyIndex >= (len(key) - 1)): 
+        keyIndex = 0
+      else: 
+        keyIndex += 1
+  
+  cipherIndex = 0
+  for letter in codedMessage:
+    if(letter in alphabet):
+      shift = (alphabet.index(message[cipherIndex]) - alphabet.index(letter)) % len(alphabet) 
+      encrypted_vigenere += alphabet[shift]
+    else:
+      encrypted_vigenere += letter
+    cipherIndex += 1    
+  return "".join(encrypted_vigenere)
+
+print(encrypt_vigenere("this is my message test", "cat"))
+print(decrypt_vigenere("rhpq iz ky tcszygl rezr", "cat"))
